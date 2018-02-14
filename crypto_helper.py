@@ -23,27 +23,25 @@ def greatest_common_divisor(a, b):
     return a
 
 
-def list_multiplicative_inverse_factors(a, n):
-    """[
-    Summary:
-    Returns a list of all the values of 'x'
-    that solve the equation 'ax mod n = 1'.]
+def multiplicative_inverse_factors(a_value, m_modulus):
+    """[Summary: Returns a list of all the values of 'x'
+        that solve the equation 'ax mod n = 1'.]
 
     Arguments:
-    a {[int]} -- [description]
-    n {[int]} -- [description]
+    a_value {[int]} -- [description]
+    m_modulus {[int]} -- [description]
     """
-    x_result = list()
-    for x in range(1, n):
-        b = x*a
-        c = b % n
-        print(a, "*", x, " mod ", n, " = ", c)
-        if c == 1:
-            print("SOLUTION FOUND!", x)
-            x_result.append(x)
-    print("number of factors:"+str(len(x_result)))
-    print("list of factors:"+str(x_result))
-    return x_result
+    mult_inverse_list = list()
+    for test_mult_inverse in range(1, m_modulus):
+        b_product = test_mult_inverse*a_value
+        mod_result = b_product % m_modulus
+        # print(a, "*", x, " mod ", n, " = ", c)
+        if mod_result == 1:
+            # print("SOLUTION FOUND!", x)
+            mult_inverse_list.append(x)
+    # print("number of factors:"+str(len(x_result)))
+    # print("list of factors:"+str(x_result))
+    return mult_inverse_list
 
 
 def eulers_totient_coprime_list(n):
@@ -53,4 +51,32 @@ def eulers_totient_coprime_list(n):
         if gcd == 1:
             list_of_coprimes.append(i)
     return list_of_coprimes
-# if __name__ == '__main__':
+
+
+def set_multiplicative_inverse_to_n(a_values, m_modulus):
+    """[iterates through a set of a_values and returns a dictionary
+         of the solutions for "a_value*x_value mod n_limit".
+         i.e. {a_value:[multiplicative inverse to n]} ]
+
+    Arguments:
+        a_values {[list]} -- [list holding the values 
+                                which will be tested for multiplicative 
+                                inverse values to n]
+        n {[int]} -- [value ]
+
+    Returns:
+        [dictionary] -- [a_value: ]
+    """
+
+    mult_inverse_dict = dict()
+    for a_value in a_values:
+        mult_inverse_dict.update({a_value:
+                                  multiplicative_inverse_factors(a_value,
+                                                                 m_modulus)})
+    return mult_inverse_dict
+
+
+if __name__ == '__main__':
+    COPRIME_LIST = eulers_totient_coprime_list(16)
+    print(COPRIME_LIST)
+    print(set_multiplicative_inverse_to_n(COPRIME_LIST, 16))
