@@ -11,7 +11,7 @@ def greatest_common_divisor(a, b):
     Implements Euclid's algorithm;
     https://en.wikipedia.org/wiki/Euclidean_algorithm#Implementations]
     Arguments:
-    a {[int]} -- [any integer positivie or negative]
+    a {[int]} -- [any integer positive or negative]
     b {[int]} -- [any integer positive or negative]
     """
     a = abs(a)
@@ -35,19 +35,31 @@ def multiplicative_inverse_factors(a_value, m_modulus):
     for test_mult_inverse in range(1, m_modulus):
         b_product = test_mult_inverse*a_value
         mod_result = b_product % m_modulus
-        # print(a, "*", x, " mod ", n, " = ", c)
+        print(a_value, "*", test_mult_inverse, " mod ", m_modulus,
+              " = ", mod_result)
         if mod_result == 1:
-            # print("SOLUTION FOUND!", x)
-            mult_inverse_list.append(x)
+            print("SOLUTION FOUND!", test_mult_inverse)
+            mult_inverse_list.append(test_mult_inverse)
     # print("number of factors:"+str(len(x_result)))
     # print("list of factors:"+str(x_result))
     return mult_inverse_list
 
 
-def eulers_totient_coprime_list(n):
+def eulers_totient_coprime_list(n_limit):
+    """[returns a list of the coprimes from 1...n_limit.
+        A number is coprime to n_limit when
+        greatest_common_divisor ("iterator in range", n_limit) returns 1]
+
+    Arguments:
+        n_limit {[int]} -- [limit at which the function stops
+                            counting and searching coprimes]
+
+    Returns:
+        [list] -- [list of the values co-prime to the  n_limit]
+    """
     list_of_coprimes = list()
-    for i in range(0, n):
-        gcd = greatest_common_divisor(i, n)
+    for i in range(0, n_limit):
+        gcd = greatest_common_divisor(i, n_limit)
         if gcd == 1:
             list_of_coprimes.append(i)
     return list_of_coprimes
@@ -59,15 +71,14 @@ def set_multiplicative_inverse_to_n(a_values, m_modulus):
          i.e. {a_value:[multiplicative inverse to n]} ]
 
     Arguments:
-        a_values {[list]} -- [list holding the values 
-                                which will be tested for multiplicative 
+        a_values {[list]} -- [list holding the values
+                                which will be tested for multiplicative
                                 inverse values to n]
         n {[int]} -- [value ]
 
     Returns:
         [dictionary] -- [a_value: ]
     """
-
     mult_inverse_dict = dict()
     for a_value in a_values:
         mult_inverse_dict.update({a_value:
@@ -76,7 +87,7 @@ def set_multiplicative_inverse_to_n(a_values, m_modulus):
     return mult_inverse_dict
 
 
-if __name__ == '__main__':
-    COPRIME_LIST = eulers_totient_coprime_list(16)
-    print(COPRIME_LIST)
-    print(set_multiplicative_inverse_to_n(COPRIME_LIST, 16))
+# if __name__ == '__main__':
+#     COPRIME_LIST = eulers_totient_coprime_list(16)
+#     print(COPRIME_LIST)
+#     print(set_multiplicative_inverse_to_n(COPRIME_LIST, 16))
